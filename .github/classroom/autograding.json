@@ -1,0 +1,134 @@
+{
+  "tests": [
+    {
+      "name": "lookup 1",
+      "run": "stack test --ta '--pattern \"lookup 1\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2.0
+    },
+    {
+      "name": "lookup 2",
+      "run": "stack test --ta '--pattern \"lookup 2\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2.0
+    },
+    {
+      "name": "lookup 3",
+      "run": "stack test --ta '--pattern \"lookup 3\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 3.0
+    },
+    {
+      "name": "lookup 4",
+      "run": "stack test --ta '--pattern \"lookup 4\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 3.0
+    },
+    {
+      "name": "tmap 1",
+      "run": "stack test --ta '--pattern \"tmap 1\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 7.0
+    },
+    {
+      "name": "tmap 2",
+      "run": "stack test --ta '--pattern \"tmap 2\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 8.0
+    },
+    {
+      "name": "tfilter 1",
+      "run": "stack test --ta '--pattern \"tfilter 1\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 8.0
+    },
+    {
+      "name": "tfilter 2",
+      "run": "stack test --ta '--pattern \"tfilter 2\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 8.0
+    },
+    {
+      "name": "tfilter 3",
+      "run": "stack test --ta '--pattern \"tfilter 3\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 9.0
+    },
+    {
+      "name": "reduce1 1",
+      "run": "stack test --ta '--pattern \"reduce1 1\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5.0
+    },
+    {
+      "name": "reduce1 2",
+      "run": "stack test --ta '--pattern \"reduce1 2\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5.0
+    },
+    {
+      "name": "reduce1 3",
+      "run": "stack test -ta '--pattern \"reduce1 3\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5.0
+    },
+    {
+      "name": "reduce1 4",
+      "run": "stack test --ta '--pattern \"reduce1 4\"'",
+      "setup": "",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 5.0
+    }
+  ]
+}
