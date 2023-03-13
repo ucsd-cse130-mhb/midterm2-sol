@@ -77,7 +77,13 @@ First, the reduction rules for addition are unchanged:
 
 semantics_callbyname_applications :: String
 semantics_callbyname_applications = [r|
-  TODO: type your answer here
+                e1 => e1'
+  [App-L] ---------------------
+             e1 e2 => e1' e2
+
+
+  [App]   (\x -> e1) e2  =>  e1[x := e2]
+
 |]
 
 -- | PROBLEM [15 grader points] --------------------------------------
@@ -96,7 +102,7 @@ semantics_callbyname_applications = [r|
 
 semantics_callbyname_lets :: String
 semantics_callbyname_lets = [r|
-  TODO: type your answer here
+  [Let]   let x = e1 in e2  =>  e2[x := e1]
 |]
 
 -- | PROBLEM [30 public points, 30 private ] -------------------------
@@ -135,7 +141,32 @@ semantics_callbyname_lets = [r|
 -- then be sure to correct your rules above.
 
 reduce1 :: Expr -> Maybe Expr
-reduce1 = error "TBD:eval"
+reduce1 (ENum _) = Nothing -- already a value
+reduce1 (ELam _ _) = Nothing -- already a value
+
+reduce1 (EVar _) = Nothing -- if it's just a Var by itself, it's stuck
+
+-- Add: n1 + n2 => n
+reduce1 (EPlus (ENum e1) (ENum e2)) = Just (ENum (e1 + e2))
+
+-- Add-R: n1 + e2 => n1 + e2', try to reduce e2
+reduce1 (EPlus (ENum e1) e2) = case reduce1 e2 of
+    Just e2' -> Just (EPlus (ENum e1) e2')
+    Nothing -> Nothing
+
+-- Add-L: e1 + e2 => e1' + e2, try to reduce e1
+reduce1 (EPlus e1 e2) = case reduce1 e1 of
+    Just e1' -> Just (EPlus e1' e2)
+    Nothing -> Nothing
+
+reduce1 (ELet x e1 e2) = Just (subst x e1 e2)
+
+-- App: (\x -> e) v => e[x := v]
+reduce1 (EApp (ELam x e1) e2) = Just (subst x e2 e1)
+
+reduce1 (EApp e1 e2) = case reduce1 e1 of
+    Just e1' -> Just (EApp e1' e2)
+    Nothing -> Nothing
 
 -- We give you a function here to evaluate an expression `e` all the 
 -- way to a value (or a stuck state), which is useful for phrasing
@@ -238,5 +269,7 @@ stripNumericSuffix = reverse . dropWhile isDigit . reverse
 -- forever under the call-by-value semantics.
 
 e_cbn :: Expr
-e_cbn = error "TBD: e_cbn"
-
+e_cbn = EApp (ELam "x" (ENum 1)) 
+             (EApp (ELam "z" (EApp (EVar "z") (EVar "z"))) 
+                   (ELam "z" (EApp (EVar "z") (EVar "z"))))
+          -- (\x -> 1) ((\z -> z z)(\z -> z z)) for instance

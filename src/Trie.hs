@@ -59,7 +59,6 @@ import Prelude hiding (lookup)
       * All the children of each Node will have distinct characters,
         for instance a Node labeled 'c' cannot have two children
         labeled 'a'.
-
     Let's develop some higher order functions on tries.
 
     First the definition of trie:
@@ -79,8 +78,8 @@ sounds =
                                    , Node 't' [ Leaf "meow" ] ]
                         , Node 'o' [ Node 'w' [ Leaf "moo"  ] ] ]
              , Node 'd' [ Node 'o' [ Node 'g' [ Leaf "bow wow"
-                                              , Node 'e' [ Leaf "so wow!"] ] ]
-                                   , Node 'o' [ Node 'r' [ Leaf "creak"  ] ] ] 
+                                              , Node 'e' [ Leaf "so wow!"] ] 
+                                   , Node 'o' [ Node 'r' [ Leaf "creak"  ] ] ] ]
              ]
 
 -- An `empty` Trie
@@ -114,7 +113,20 @@ empty = Node '*' []
 -- HINT: The helper functions `getVal` and `getKid` shown below may be useful!
 -- 
 lookup :: [Char] -> Trie a -> Maybe a 
-lookup cs t = error "TODO: lookup"
+-- We are out of letters to search up and we're not at a node
+lookup [] (Leaf _) = Nothing
+-- we finished looking up and we're at a node - if it has a value, return it
+lookup [] (Node _ kids) = getValFromKids kids
+  where
+    getValFromKids :: [Trie a] -> Maybe a
+    getValFromKids [] = Nothing
+    getValFromKids ((Leaf x) : _) = Just x
+    getValFromKids (_:xs) = getValFromKids xs
+-- we have letters to look up. Look for a kid with that value
+-- and search on remaining letters
+lookup (c:cs) t = case getKid c t of
+  Just trie -> lookup cs trie
+  Nothing -> Nothing
 
 -- | 'getVal t' returns 'Just v' if trie 't' is a Leaf with
 --   value 'v' at the root.
@@ -144,7 +156,15 @@ getKid c (Leaf _)     = Nothing
 --   values obtained by applying `f k v` for every key-value pair.
 
 tmap :: ([Char] -> a -> b) -> Trie a -> Trie b 
-tmap f t = error "TODO: trie map"
+tmap f (Node '*' kids) = Node '*' (traverseKids "" kids)
+  where
+    traverseKids _ [] = []
+    -- first parameter is the key so far. apply the function to leaves...
+    traverseKids key (Leaf x : xs) = Leaf (f key x) : traverseKids key xs
+    -- and if we hit a node, add that letter to the key and apply to kids, and keep traversing
+    traverseKids key (Node k kids : xs) = Node k (traverseKids (key ++ [k]) kids) : traverseKids key xs
+
+tmap _ _ = error "invalid trie"
 
 -- When you are done you should get this behavior:
 
@@ -180,7 +200,25 @@ tmap f t = error "TODO: trie map"
 --    * Every Node must have at least one child.
 
 tfilter :: ([Char] -> a -> Bool) -> Trie a -> Trie a
-tfilter f t = error "TODO: trie filter"
+-- forces that starting node
+tfilter f (Node '*' kids) = Node '*' (traverseKids "" kids)
+  where
+    traverseKids _ [] = []
+
+    -- if we have a leaf, only include it if it matches condition
+    traverseKids key (Leaf v : xs)
+      | f key v = Leaf v : traverseKids key xs
+      | otherwise = traverseKids key xs
+
+    -- if we have a node, recursively call traverseKids on its kids
+    -- if it now has no kids, do not include this node.
+    traverseKids key (Node k kids : xs) = case traversedKids of
+      [] -> traverseKids key xs
+      _ -> Node k traversedKids : traverseKids key xs
+      where
+        traversedKids = traverseKids (key ++ [k]) kids
+
+tfilter _ _ = error "invalid starting trie"
 
 -- When you are done you should get this behavior:
 
