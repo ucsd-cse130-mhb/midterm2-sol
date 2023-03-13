@@ -37,8 +37,8 @@ trie sc = testGroup "Problem 1: Trie"
                                    , Node 't' [ Leaf "meow" ] ]
                         , Node 'o' [ Node 'w' [ Leaf "moo"  ] ] ]
                          , Node 'd' [ Node 'o' [ Node 'g' [ Leaf "bow wow"
-                                              , Node 'e' [ Leaf "so wow!"] ] ]
-                                   , Node 'o' [ Node 'r' [ Leaf "creak"  ] ] ]
+                                              , Node 'e' [ Leaf "so wow!"] ]
+                                   , Node 'o' [ Node 'r' [ Leaf "creak"  ] ] ] ]
                          ]
               , 7
               , "tmap 1" )
@@ -48,8 +48,8 @@ trie sc = testGroup "Problem 1: Trie"
                                                , Node 't' [ Leaf "meow meow" ] ]
                                     , Node 'o' [ Node 'w' [ Leaf "moo moo"  ] ] ]
                          , Node 'd' [ Node 'o' [ Node 'g' [ Leaf "bow wow bow wow"
-                                               , Node 'e' [ Leaf "so wow! so wow!"] ] ]
-                                    , Node 'o' [ Node 'r' [ Leaf "creak creak"  ] ] ] 
+                                               , Node 'e' [ Leaf "so wow! so wow!"] ]
+                                    , Node 'o' [ Node 'r' [ Leaf "creak creak"  ] ] ] ] 
              ]
               , 8
               , "tmap 2")
