@@ -112,7 +112,7 @@
     },
     {
       "name": "reduce1 3",
-      "run": "stack test -ta '--pattern \"reduce1 3\"'",
+      "run": "stack test --ta '--pattern \"reduce1 3\"'",
       "setup": "",
       "input": "",
       "output": "",
